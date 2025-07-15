@@ -2,6 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
+interface BriefSection {
+  id: number;
+  icon: string;
+  title: string;
+  content: string;
+  type: 'text' | 'insights' | 'metrics';
+  insights?: InsightCard[];
+}
+
+interface InsightCard {
+  title: string;
+  content: string;
+}
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -11,6 +25,103 @@ import { FormsModule } from '@angular/forms';
 })
 export class AppComponent implements OnInit {
   title = 'creative-sync';
+
+  
+// Sections
+briefSections: BriefSection[] = [
+{
+    id: 0,
+    icon: '🎯',
+    title: 'Campaign Objective',
+    content: 'Launch TechFlow CRM to small business owners in healthcare, driving 50,000 app downloads within 8 weeks while establishing the brand as the go-to solution for healthcare practice automation.',
+    type: 'text'
+},
+{
+    id: 1,
+    icon: '👥',
+    title: 'Target Audience',
+    content: `<strong>Primary:</strong> Healthcare practice owners and managers (ages 28-42)<br>
+            <strong>Characteristics:</strong> Tech-savvy but time-constrained, focused on efficiency and patient care quality<br>
+            <strong>Pain Points:</strong> Manual scheduling, patient data management, billing inefficiencies<br>
+            <strong>Motivation:</strong> Streamline operations to focus more on patient care`,
+    type: 'text'
+},
+{
+    id: 2,
+    icon: '💬',
+    title: 'Key Message',
+    content: '"TechFlow CRM gives healthcare professionals 5 hours back each week through intelligent automation, so you can focus on what matters most—your patients."',
+    type: 'text'
+},
+{
+    id: 3,
+    icon: '🎨',
+    title: 'Tone and Brand Personality',
+    content: `<strong>Primary Tone:</strong> Professional yet approachable, empowering<br>
+            <strong>Voice Characteristics:</strong> Confident, supportive, solution-focused<br>
+            <strong>Visual Style:</strong> Clean, minimalist design with healthcare-appropriate color palette (trustworthy blues, calming greens)`,
+    type: 'text'
+},
+{
+    id: 4,
+    icon: '📱',
+    title: 'Suggested Channels/Media',
+    content: `<strong>Primary Channels:</strong> LinkedIn sponsored content, Healthcare industry publications<br>
+            <strong>Secondary:</strong> Email sequences, Webinar series, Demo videos<br>
+            <strong>Content Formats:</strong> Video testimonials, Interactive demos, Case studies, Infographics`,
+    type: 'text'
+},
+{
+    id: 5,
+    icon: '🧠',
+    title: 'Key AI-Generated Insights',
+    content: 'AI-powered insights based on market analysis and industry trends',
+    type: 'insights',
+    insights: [
+    {
+        title: 'Optimal Timing',
+        content: 'Launch campaign on Tuesday-Thursday, 9-11 AM when healthcare professionals check professional content'
+    },
+    {
+        title: 'Content Performance',
+        content: 'Video testimonials from actual healthcare workers generate 3.2x more engagement than generic demos'
+    },
+    {
+        title: 'Competitive Advantage',
+        content: 'Emphasize HIPAA compliance and healthcare-specific features—67% of competitors don\'t highlight this'
+    },
+    {
+        title: 'Budget Allocation',
+        content: 'Recommended: 40% LinkedIn ads, 30% content creation, 20% email marketing, 10% retargeting'
+    }
+    ]
+},
+{
+    id: 6,
+    icon: '📊',
+    title: 'Success Metrics',
+    content: `<strong>Primary KPIs:</strong><br>
+            • 50,000 app downloads within 8 weeks<br>
+            • 15% trial-to-paid conversion rate<br>
+            • Cost per acquisition under $25<br><br>
+            <strong>Secondary KPIs:</strong><br>
+            • 25% increase in brand awareness in healthcare sector<br>
+            • 500+ webinar registrations<br>
+            • 3.5+ average content engagement rate`,
+    type: 'text'
+},
+{
+    id: 7,
+    icon: '🤝',
+    title: 'Stakeholder Contributions',
+    content: `<strong>Marketing Team:</strong> Campaign objectives, target metrics, channel strategy<br>
+            <strong>Product Team:</strong> Key features, technical differentiators, user benefits<br>
+            <strong>Design Team:</strong> Visual direction, brand consistency, content formats<br>
+            <strong>Sales Team:</strong> Customer pain points, objection handling, pricing strategy`,
+    type: 'text'
+}
+];
+  
 
   // ...existing properties...
   currentZoom = 1;
@@ -141,6 +252,8 @@ export class AppComponent implements OnInit {
     { value: 'website-traffic', label: 'Tráfico web', aiRecommended: false },
     { value: 'lead-quality', label: 'Calidad de leads', aiRecommended: true }
   ];
+
+  
 
   generatedBrief = '';
   isPreviewMode = false;
@@ -674,25 +787,6 @@ export class AppComponent implements OnInit {
     }
   }
 
-  toggleChat(): void {
-    this.chatModalActive = !this.chatModalActive;
-    
-    if (this.chatModalActive) {
-      this.enterSelectionMode();
-    } else {
-      this.exitSelectionMode();
-    }
-  }
-
-  handleSectionClick(event: MouseEvent, title: string, content: string, index: number): void {
-    if (!this.selectionMode) return;
-    
-    event.stopPropagation();
-    this.selectedSectionIndex = null;
-    this.selectedSectionIndex = index;
-    this.exitSelectionMode();
-    this.openChat(title, content);
-  }
 
   // Network node hover methods (simplified)
   onTargetAudienceHover(event: MouseEvent): void {
@@ -757,26 +851,6 @@ export class AppComponent implements OnInit {
     ];
   }
 
-  enterSelectionMode(): void {
-    this.selectionMode = true;
-    this.selectedSectionIndex = null;
-    document.body.classList.add('selection-mode');
-  }
-
-  exitSelectionMode(): void {
-    this.selectionMode = false;
-    this.selectedSectionIndex = null;
-    document.body.classList.remove('selection-mode');
-  }
-
-  openChat(contextTitle: string | null = null, contextContent: string | null = null): void {
-    this.chatModalActive = true;
-    if (contextTitle && contextContent) {
-      this.initAIChatWithContext(contextTitle, contextContent);
-    } else {
-      this.initAIChat();
-    }
-  }
 
   initAIChat(): void {
     this.chatMessages = [];
@@ -857,7 +931,82 @@ export class AppComponent implements OnInit {
   isCurrentStep(step: number): boolean {
     return this.currentStep === step;
   }
+  getBriefSectionContent(sectionId: number): string {
+  const section = this.briefSections.find(s => s.id === sectionId);
+  if (!section) return '';
+  
+  if (section.type === 'insights' && section.insights) {
+    return section.insights.map(insight => `${insight.title}: ${insight.content}`).join('. ');
+  }
+  
+  return section.content.replace(/<[^>]*>/g, ''); // Remove HTML tags for plain text
+}
 
-  // ...existing code...
+
+// ...existing code...
+
+// Método para entrar en modo selección
+enterSelectionMode(): void {
+  this.selectionMode = true;
+  this.selectedSectionIndex = null;
+  console.log('Entered selection mode');
+}
+
+// Método para salir del modo selección
+exitSelectionMode(): void {
+  this.selectionMode = false;
+  this.selectedSectionIndex = null;
+  console.log('Exited selection mode');
+}
+
+// Actualizar el método toggleChat
+toggleChat(): void {
+  if (this.selectionMode) {
+    // Si está en modo selección, salir del modo
+    this.exitSelectionMode();
+    this.chatModalActive = false;
+  } else {
+    // Si no está en modo selección, entrar en modo selección
+    this.enterSelectionMode();
+    this.chatModalActive = false; // No abrir el chat aún
+  }
+}
+
+// Método para manejar click en sección
+handleSectionClick(event: Event, sectionTitle: string, sectionContent: string, sectionId: number): void {
+  if (!this.selectionMode) return;
+  
+  event.preventDefault();
+  event.stopPropagation();
+  
+  console.log('Section clicked:', sectionTitle);
+  
+  // Seleccionar la sección
+  this.selectedSectionIndex = sectionId;
+  
+  // Abrir el chat con contexto
+  this.openChat(sectionTitle, sectionContent);
+  
+  // Salir del modo selección después de un breve delay
+  setTimeout(() => {
+    this.selectionMode = false;
+  }, 300);
+}
+
+// Método para abrir chat con contexto
+openChat(title: string, content: string): void {
+  this.chatModalActive = true;
+  
+  // Agregar mensaje del usuario automáticamente
+  this.addMessageToChat('user'  , `Analyze this section: "${title}"`);
+  
+  // Simular respuesta de AI
+  setTimeout(() => {
+    this.addMessageToChat('ai' , `Ill analyze the "${title}" section for you. Based on the content, I can provide insights about...`);
+    this.initSuggestedQuestions(title);
+  }, 1000);
+}
+
+// ...existing code...
 
 }

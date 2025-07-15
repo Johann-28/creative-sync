@@ -1,4 +1,10 @@
 <div class="app-container">
+    <!-- Mensaje superior para modo selección -->
+
+    <div class="selection-top-message" [class.active]="selectionMode">
+        🎯 Selecciona una sección para analizarla con AI
+        <button class="btn-cancel-selection" (click)="exitSelectionMode()">✕</button>
+    </div>
     <!-- Header -->
     <header class="header">
         <div class="logo">🎨 CreativeSync</div>
@@ -370,118 +376,28 @@
                     </div>
 
                     
-
-                    <div class="brief-section" 
-                         [class.section-selectable]="selectionMode"
-                         [class.section-selected]="selectedSectionIndex === 0"
-                         (click)="selectionMode ? handleSectionClick($event, 'Campaign Objective', 'Launch TechFlow CRM to small business owners in healthcare, driving 50,000 app downloads within 8 weeks while establishing the brand as the go-to solution for healthcare practice automation.', 0) : null">
-                        <h3>🎯 Campaign Objective</h3>
-                        <div class="brief-content">
-                            Launch TechFlow CRM to small business owners in healthcare, driving 50,000 app downloads within 8 weeks while establishing the brand as the go-to solution for healthcare practice automation.
-                        </div>
-                    </div>
-
-                    <div class="brief-section"
-                         [class.section-selectable]="selectionMode"
-                         [class.section-selected]="selectedSectionIndex === 1"
-                         (click)="selectionMode ? handleSectionClick($event, 'Target Audience', 'Primary: Healthcare practice owners and managers (ages 28-42). Characteristics: Tech-savvy but time-constrained, focused on efficiency and patient care quality. Pain Points: Manual scheduling, patient data management, billing inefficiencies. Motivation: Streamline operations to focus more on patient care', 1) : null">
-                        <h3>👥 Target Audience</h3>
-                        <div class="brief-content">
-                            <strong>Primary:</strong> Healthcare practice owners and managers (ages 28-42)<br>
-                            <strong>Characteristics:</strong> Tech-savvy but time-constrained, focused on efficiency and patient care quality<br>
-                            <strong>Pain Points:</strong> Manual scheduling, patient data management, billing inefficiencies<br>
-                            <strong>Motivation:</strong> Streamline operations to focus more on patient care
-                        </div>
-                    </div>
-
-                    <div class="brief-section"
-                         [class.section-selectable]="selectionMode"
-                         [class.section-selected]="selectedSectionIndex === 2"
-                         (click)="selectionMode ? handleSectionClick($event, 'Key Message', 'TechFlow CRM gives healthcare professionals 5 hours back each week through intelligent automation, so you can focus on what matters most—your patients.', 2) : null">
-                        <h3>💬 Key Message</h3>
-                        <div class="brief-content">
-                            "TechFlow CRM gives healthcare professionals 5 hours back each week through intelligent automation, so you can focus on what matters most—your patients."
-                        </div>
-                    </div>
-
-                    <div class="brief-section"
-                         [class.section-selectable]="selectionMode"
-                         [class.section-selected]="selectedSectionIndex === 3"
-                         (click)="selectionMode ? handleSectionClick($event, 'Tone and Brand Personality', 'Primary Tone: Professional yet approachable, empowering. Voice Characteristics: Confident, supportive, solution-focused. Visual Style: Clean, minimalist design with healthcare-appropriate color palette (trustworthy blues, calming greens)', 3) : null">
-                        <h3>🎨 Tone and Brand Personality</h3>
-                        <div class="brief-content">
-                            <strong>Primary Tone:</strong> Professional yet approachable, empowering<br>
-                            <strong>Voice Characteristics:</strong> Confident, supportive, solution-focused<br>
-                            <strong>Visual Style:</strong> Clean, minimalist design with healthcare-appropriate color palette (trustworthy blues, calming greens)
-                        </div>
-                    </div>
-
-                    <div class="brief-section"
-                         [class.section-selectable]="selectionMode"
-                         [class.section-selected]="selectedSectionIndex === 4"
-                         (click)="selectionMode ? handleSectionClick($event, 'Suggested Channels/Media', 'Primary Channels: LinkedIn sponsored content, Healthcare industry publications. Secondary: Email sequences, Webinar series, Demo videos. Content Formats: Video testimonials, Interactive demos, Case studies, Infographics', 4) : null">
-                        <h3>📱 Suggested Channels/Media</h3>
-                        <div class="brief-content">
-                            <strong>Primary Channels:</strong> LinkedIn sponsored content, Healthcare industry publications<br>
-                            <strong>Secondary:</strong> Email sequences, Webinar series, Demo videos<br>
-                            <strong>Content Formats:</strong> Video testimonials, Interactive demos, Case studies, Infographics
-                        </div>
-                    </div>
-
-                    <div class="brief-section"
-                         [class.section-selectable]="selectionMode"
-                         [class.section-selected]="selectedSectionIndex === 5"
-                         (click)="selectionMode ? handleSectionClick($event, 'Key AI-Generated Insights', 'Optimal Timing: Launch campaign on Tuesday-Thursday, 9-11 AM when healthcare professionals check professional content. Content Performance: Video testimonials from actual healthcare workers generate 3.2x more engagement than generic demos. Competitive Advantage: Emphasize HIPAA compliance and healthcare-specific features—67% of competitors do not highlight this. Budget Allocation: Recommended: 40% LinkedIn ads, 30% content creation, 20% email marketing, 10% retargeting', 5) : null">
-                        <h3>🧠 Key AI-Generated Insights</h3>
-                        <div class="insights-grid">
-                            <div class="insight-card">
-                                <div class="insight-title">Optimal Timing</div>
-                                <div>Launch campaign on Tuesday-Thursday, 9-11 AM when healthcare professionals check professional content</div>
-                            </div>
-                            <div class="insight-card">
-                                <div class="insight-title">Content Performance</div>
-                                <div>Video testimonials from actual healthcare workers generate 3.2x more engagement than generic demos</div>
-                            </div>
-                            <div class="insight-card">
-                                <div class="insight-title">Competitive Advantage</div>
-                                <div>Emphasize HIPAA compliance and healthcare-specific features—67% of competitors don't highlight this</div>
-                            </div>
-                            <div class="insight-card">
-                                <div class="insight-title">Budget Allocation</div>
-                                <div>Recommended: 40% LinkedIn ads, 30% content creation, 20% email marketing, 10% retargeting</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="brief-section"
-                         [class.section-selectable]="selectionMode"
-                         [class.section-selected]="selectedSectionIndex === 6"
-                         (click)="selectionMode ? handleSectionClick($event, 'Success Metrics', 'Primary KPIs: 50,000 app downloads within 8 weeks, 15% trial-to-paid conversion rate, Cost per acquisition under $25. Secondary KPIs: 25% increase in brand awareness in healthcare sector, 500+ webinar registrations, 3.5+ average content engagement rate', 6) : null">
-                        <h3>📊 Success Metrics</h3>
-                        <div class="brief-content">
-                            <strong>Primary KPIs:</strong><br>
-                            • 50,000 app downloads within 8 weeks<br>
-                            • 15% trial-to-paid conversion rate<br>
-                            • Cost per acquisition under $25<br><br>
-                            <strong>Secondary KPIs:</strong><br>
-                            • 25% increase in brand awareness in healthcare sector<br>
-                            • 500+ webinar registrations<br>
-                            • 3.5+ average content engagement rate
-                        </div>
-                    </div>
-
-                    <div class="brief-section"
-                         [class.section-selectable]="selectionMode"
-                         [class.section-selected]="selectedSectionIndex === 7"
-                         (click)="selectionMode ? handleSectionClick($event, 'Stakeholder Contributions', 'Marketing Team: Campaign objectives, target metrics, channel strategy. Product Team: Key features, technical differentiators, user benefits. Design Team: Visual direction, brand consistency, content formats. Sales Team: Customer pain points, objection handling, pricing strategy', 7) : null">
-                        <h3>🤝 Stakeholder Contributions</h3>
-                        <div class="brief-content">
-                            <strong>Marketing Team:</strong> Campaign objectives, target metrics, channel strategy<br>
-                            <strong>Product Team:</strong> Key features, technical differentiators, user benefits<br>
-                            <strong>Design Team:</strong> Visual direction, brand consistency, content formats<br>
-                            <strong>Sales Team:</strong> Customer pain points, objection handling, pricing strategy
-                        </div>
-                    </div>
+<div *ngFor="let section of briefSections; " 
+             class="brief-section" 
+             [class.section-selectable]="selectionMode"
+             [class.section-selected]="selectedSectionIndex === section.id"
+             (click)="selectionMode ? handleSectionClick($event, section.title, getBriefSectionContent(section.id), section.id) : null">
+            
+            <h3>{{ section.icon }} {{ section.title }}</h3>
+            
+            <!-- Text Content -->
+            <div *ngIf="section.type === 'text'" class="brief-content" [innerHTML]="section.content"></div>
+            
+            <!-- Insights Grid -->
+            <div *ngIf="section.type === 'insights'" class="insights-grid">
+                <div *ngFor="let insight of section.insights;" class="insight-card">
+                    <div class="insight-title">{{ insight.title }}</div>
+                    <div>{{ insight.content }}</div>
+                </div>
+            </div>
+            
+            <!-- Metrics Content -->
+            <div *ngIf="section.type === 'metrics'" class="brief-content" [innerHTML]="section.content"></div>
+        </div>
 
                     <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1);">
                         <p style="color: #888; font-size: 0.9rem;">
