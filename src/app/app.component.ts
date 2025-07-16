@@ -57,7 +57,7 @@ export class AppComponent implements OnInit {
 
   // Creative Brief Wizard properties
   currentStep: number = 1;
-  totalSteps: number = 8;
+  totalSteps: number = 4;
   briefData: any = {
     // Step 1: Business & Brand Info
     companyName: '',
@@ -865,20 +865,104 @@ export class AppComponent implements OnInit {
       }
     });
   }
-
   // Exportar brief
   exportBrief(format: 'pdf' | 'json' | 'docx'): void {
-    this.briefService.exportBrief(format).subscribe({
-      next: (exportData) => {
-        // Simular descarga del archivo
-        console.log('Export ready:', exportData);
-        alert(`Brief exportado como ${format.toUpperCase()}. En una implementación real, se descargaría: ${exportData.filename}`);
-      },
-      error: (error) => {
-        console.error('Error exporting brief:', error);
-        alert('Error al exportar el brief');
+    try {
+      let fileName = '';
+      let filePath = '';
+      
+      // Determinar el archivo y ruta según el formato
+      switch (format) {
+        case 'pdf':
+          fileName = 'pdf_Brief.pdf';
+          filePath = '/pdf_Brief.pdf'; // Archivo en la carpeta public
+          break;
+        case 'json':
+          fileName = 'creative_brief.json';
+          // Para JSON, generamos el contenido dinámicamente
+          this.downloadGeneratedJSON();
+          return;
+        case 'docx':
+          fileName = 'creative_brief.docx';
+          filePath = '/creative_brief.docx'; // Archivo en la carpeta public
+          break;
       }
-    });
+      
+      // Crear enlace de descarga para archivos estáticos (PDF, DOCX)
+      const link = document.createElement('a');
+      link.href = filePath;
+      link.download = fileName;
+      link.target = '_blank'; // Abrir en nueva pestaña como respaldo
+      
+      // Añadir el enlace al DOM temporalmente
+      document.body.appendChild(link);
+      
+      // Hacer clic en el enlace para iniciar la descarga
+      link.click();
+      
+      // Remover el enlace del DOM
+      document.body.removeChild(link);
+      
+      console.log(`Brief descargado como ${format.toUpperCase()}: ${fileName}`);
+      
+      // Mostrar mensaje de confirmación al usuario
+      alert(`✅ Descarga iniciada: ${fileName}\n\nEl archivo se descargará automáticamente en unos segundos.`);
+      
+    } catch (error) {
+      console.error('Error al descargar el archivo:', error);
+      alert(`❌ Error al descargar el archivo ${format.toUpperCase()}.\n\nPor favor, verifica que el archivo existe en la carpeta del proyecto.`);
+    }
+  }
+
+  // Método auxiliar para descargar JSON generado dinámicamente
+  private downloadGeneratedJSON(): void {
+    try {
+      // Generar el contenido JSON del brief actual
+      const briefJSON = {
+        projectInfo: {
+          title: 'Creative Brief',
+          generatedAt: new Date().toISOString(),
+          version: '1.0'
+        },
+        briefData: this.briefData,
+        uploadedFiles: this.uploadedFiles.map(file => ({
+          name: file.name,
+          size: file.size,
+          type: file.type,
+          lastModified: file.lastModified
+        })),
+        briefSections: this.briefSections
+      };
+      
+      // Convertir a JSON string
+      const jsonString = JSON.stringify(briefJSON, null, 2);
+      
+      // Crear blob
+      const blob = new Blob([jsonString], { type: 'application/json' });
+      
+      // Crear URL del blob
+      const url = window.URL.createObjectURL(blob);
+      
+      // Crear enlace de descarga
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'creative_brief.json';
+      
+      // Descargar
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      // Liberar el URL del blob
+      window.URL.revokeObjectURL(url);
+      
+      console.log('Brief JSON generado y descargado exitosamente');
+      alert('✅ Brief exportado como JSON exitosamente!');
+      
+    } catch (error) {
+      console.error('Error al generar JSON:', error);
+      alert('❌ Error al generar el archivo JSON.');
+    }
   }
 
   // Sincronizar con stakeholders

@@ -1,0 +1,44 @@
+{
+  "success": true,
+  "timestamp": "2025-07-16T10:08:33.956754",
+  "sections": [
+    {
+      "id": 1,
+      "icon": "🎯",
+      "title": "Business Objective",
+      "content": "<strong>Primary Goal:</strong> Establish EdgeVerve as the leading provider of Applied AI solutions for enterprises<br><strong>Target Market:</strong> Large enterprises ($1B-$5B revenue) in financial, healthcare, and manufacturing sectors<br><strong>Success Metrics:</strong> 15% market share increase, $50M ARR growth, 500+ enterprise customers within 12 months",
+      "type": "text"
+    },
+    {
+      "id": 2,
+      "icon": "📈",
+      "title": "Marketing Objective",
+      "content": "<strong>1. Platform Brand Awareness:</strong> Increase EdgeVerve brand recognition among enterprise CIOs by 40%<br><strong>2. Lead Generation:</strong> Generate 500+ qualified enterprise leads quarterly<br><strong>3. Thought Leadership:</strong> Position EdgeVerve as the go-to expert in enterprise AI implementation and governance",
+      "type": "text"
+    },
+    {
+      "id": 3,
+      "icon": "📋",
+      "title": "Background",
+      "content": "EdgeVerve operates in the rapidly growing enterprise AI market, serving large corporations ($1B-$5B revenue) seeking to scale AI beyond experimentation. The market demands unified platforms that can democratize AI across organizations while maintaining enterprise-grade security and governance.<br><strong>Market Size:</strong> $50B by 2025<br><strong>Growth Rate:</strong> 67% YoY",
+      "type": "text"
+    },
+    {
+      "id": 17,
+      "icon": "📱",
+      "title": "Channels / Campaign Digital Mediums",
+      "content": "<strong>Primary Channels:</strong> LinkedIn sponsored content, Industry publications, Google Ads<br><strong>Secondary Channels:</strong> YouTube demos, Webinar series, Email sequences<br><strong>Content Distribution:</strong> Thought leadership articles, technical whitepapers, interactive demos<br><strong>Engagement Strategy:</strong> Account-based marketing for top 100 enterprise prospects<br><strong>Measurement:</strong> Pipeline influence, engagement scores, brand lift studies",
+      "type": "text"
+    }
+  ],
+  "metadata": {
+    "research_time": 15.42,
+    "agents_used": [
+      "competitor",
+      "trends",
+      "audience",
+      "brief_generator"
+    ],
+    "total_sections": 4
+  }
+}

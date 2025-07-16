@@ -2141,57 +2141,57 @@
   }
 }        /* File Upload Section */
         .file-upload-section {
-            background: #ffffff;
-            border: 1px solid #e5e7eb;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
             padding: 1.5rem;
             margin-bottom: 2rem;
         }
 
         .file-upload-area {
-            border: 2px dashed #d1d5db;
+            border: 2px dashed rgba(255, 255, 255, 0.3);
             border-radius: 12px;
             padding: 2rem;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            background: #f9fafb;
+            background: rgba(255, 255, 255, 0.02);
         }
 
         .file-upload-area:hover {
-            border-color: #00B0F0;
-            background: rgba(0, 176, 240, 0.05);
+            border-color: rgba(102, 126, 234, 0.6);
+            background: rgba(102, 126, 234, 0.05);
         }
 
         .file-upload-area.has-files {
             border-style: solid;
-            border-color: #00B0F0;
-            background: rgba(0, 176, 240, 0.08);
+            border-color: rgba(102, 126, 234, 0.4);
+            background: rgba(102, 126, 234, 0.08);
         }
 
         .upload-prompt {
-            color: #374151;
+            color: rgba(255, 255, 255, 0.8);
         }
 
         .upload-icon {
             font-size: 3rem;
             margin-bottom: 1rem;
-            color: #6b7280;
+            opacity: 0.7;
         }
 
         .upload-prompt h4 {
             margin-bottom: 0.5rem;
             font-weight: 600;
-            color: #082C4C;
+            color: #fff;
         }
 
         .upload-prompt p {
             font-size: 0.9rem;
-            color: #6b7280;
+            opacity: 0.7;
         }
 
         .uploaded-files h4 {
-            color: #082C4C;
+            color: #fff;
             margin-bottom: 1rem;
             font-weight: 600;
         }
@@ -2207,17 +2207,15 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: #ffffff;
-            border: 1px solid #e5e7eb;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 8px;
             padding: 0.75rem 1rem;
             transition: all 0.2s ease;
-            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
         }
 
         .file-item:hover {
-            background: #f9fafb;
-            border-color: #00B0F0;
+            background: rgba(255, 255, 255, 0.08);
         }
 
         .file-info {
@@ -2237,20 +2235,20 @@
         }
 
         .file-name {
-            color: #082C4C;
+            color: #fff;
             font-weight: 500;
             font-size: 0.9rem;
         }
 
         .file-size {
-            color: #6b7280;
+            color: rgba(255, 255, 255, 0.6);
             font-size: 0.8rem;
         }
 
         .file-remove {
             background: none;
             border: none;
-            color: #6b7280;
+            color: rgba(255, 255, 255, 0.6);
             cursor: pointer;
             padding: 0.25rem;
             border-radius: 4px;
@@ -2258,12 +2256,12 @@
         }
 
         .file-remove:hover {
-            background: #fef2f2;
-            color: #dc2626;
+            background: rgba(255, 0, 0, 0.1);
+            color: #ff6b6b;
         }
 
         .add-more-files {
-            color: #00B0F0;
+            color: rgba(102, 126, 234, 0.8);
             font-size: 0.9rem;
             font-weight: 500;
             cursor: pointer;
@@ -2272,19 +2270,19 @@
         }
 
         .add-more-files:hover {
-            color: #0284c7;
+            color: #667eea;
         }
 
         .file-upload-info {
             margin-top: 1.5rem;
             padding: 1rem;
-            background: rgba(0, 176, 240, 0.05);
-            border: 1px solid rgba(0, 176, 240, 0.2);
+            background: rgba(102, 126, 234, 0.05);
+            border: 1px solid rgba(102, 126, 234, 0.2);
             border-radius: 8px;
         }
 
         .file-upload-info small {
-            color: #082C4C;
+            color: rgba(255, 255, 255, 0.8);
             font-weight: 600;
         }
 
@@ -2295,7 +2293,7 @@
         }
 
         .context-benefits li {
-            color: #374151;
+            color: rgba(255, 255, 255, 0.7);
             font-size: 0.85rem;
             margin-bottom: 0.25rem;
             padding-left: 1.5rem;
