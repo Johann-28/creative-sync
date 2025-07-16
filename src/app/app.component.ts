@@ -42,6 +42,19 @@ export class AppComponent implements OnInit {
   selectedSectionIndex: number | null = null;
   chatInputText = '';
 
+  // File upload properties for LLM context
+  uploadedFiles: File[] = [];
+  maxFileSize = 10 * 1024 * 1024; // 10MB in bytes
+  allowedFileTypes = [
+    'application/pdf',
+    'application/msword',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'text/plain',
+    'image/png',
+    'image/jpeg',
+    'image/jpg'
+  ];
+
   // Creative Brief Wizard properties
   currentStep: number = 1;
   totalSteps: number = 8;
@@ -101,56 +114,53 @@ export class AppComponent implements OnInit {
     'Technology', 'Healthcare', 'Finance', 'Retail', 'Education', 'Manufacturing',
     'Real Estate', 'Food & Beverage', 'Travel & Tourism', 'Automotive', 'Entertainment'
   ];
-
   brandPersonalityOptions = [
-    { value: 'professional', label: 'Profesional', aiRecommended: false },
-    { value: 'friendly', label: 'Amigable', aiRecommended: true },
-    { value: 'innovative', label: 'Innovadora', aiRecommended: true },
-    { value: 'conservative', label: 'Conservadora', aiRecommended: false },
-    { value: 'youthful', label: 'Juvenil', aiRecommended: false },
-    { value: 'sophisticated', label: 'Sofisticada', aiRecommended: false },
-    { value: 'trustworthy', label: 'Confiable', aiRecommended: true },
-    { value: 'dynamic', label: 'Dinámico', aiRecommended: false }
+    { value: 'professional', label: 'Professional', aiRecommended: false },
+    { value: 'friendly', label: 'Friendly', aiRecommended: true },
+    { value: 'innovative', label: 'Innovative', aiRecommended: true },
+    { value: 'conservative', label: 'Conservative', aiRecommended: false },
+    { value: 'youthful', label: 'Youthful', aiRecommended: false },
+    { value: 'sophisticated', label: 'Sophisticated', aiRecommended: false },
+    { value: 'trustworthy', label: 'Trustworthy', aiRecommended: true },
+    { value: 'dynamic', label: 'Dynamic', aiRecommended: false }
   ];
 
   campaignObjectiveOptions = [
-    { value: 'product-launch', label: 'Lanzamiento de producto', aiRecommended: true },
-    { value: 'lead-generation', label: 'Generación de leads', aiRecommended: false },
-    { value: 'brand-awareness', label: 'Awareness de marca', aiRecommended: false },
-    { value: 'customer-retention', label: 'Retención de clientes', aiRecommended: false },
-    { value: 'market-expansion', label: 'Expansión de mercado', aiRecommended: true }
+    { value: 'product-launch', label: 'Product Launch', aiRecommended: true },
+    { value: 'lead-generation', label: 'Lead Generation', aiRecommended: false },
+    { value: 'brand-awareness', label: 'Brand Awareness', aiRecommended: false },
+    { value: 'customer-retention', label: 'Customer Retention', aiRecommended: false },
+    { value: 'market-expansion', label: 'Market Expansion', aiRecommended: true }
   ];
 
   contentTypeOptions = [
-    { value: 'social-posts', label: 'Posts de redes sociales', aiRecommended: true },
-    { value: 'email-campaign', label: 'Campaña de email', aiRecommended: true },
-    { value: 'website', label: 'Sitio web', aiRecommended: false },
+    { value: 'social-posts', label: 'Social Media Posts', aiRecommended: true },
+    { value: 'email-campaign', label: 'Email Campaign', aiRecommended: true },
+    { value: 'website', label: 'Website', aiRecommended: false },
     { value: 'video', label: 'Video', aiRecommended: true },
-    { value: 'presentation', label: 'Presentación', aiRecommended: false },
-    { value: 'article', label: 'Artículo', aiRecommended: false },
-    { value: 'infographic', label: 'Infografía', aiRecommended: false }
+    { value: 'presentation', label: 'Presentation', aiRecommended: false },
+    { value: 'article', label: 'Article', aiRecommended: false },
+    { value: 'infographic', label: 'Infographic', aiRecommended: false }
   ];
 
   channelOptions = [
-    { value: 'social-media', label: 'Redes sociales', aiRecommended: true },
-    { value: 'paid-ads', label: 'Anuncios pagados', aiRecommended: true },
-    { value: 'email', label: 'Email marketing', aiRecommended: true },
-    { value: 'website', label: 'Sitio web', aiRecommended: false },
-    { value: 'events', label: 'Eventos', aiRecommended: false },
-    { value: 'print-media', label: 'Medios impresos', aiRecommended: false },
-    { value: 'influencer', label: 'Marketing de influencers', aiRecommended: false }
+    { value: 'social-media', label: 'Social Media', aiRecommended: true },
+    { value: 'paid-ads', label: 'Paid Ads', aiRecommended: true },
+    { value: 'email', label: 'Email Marketing', aiRecommended: true },
+    { value: 'website', label: 'Website', aiRecommended: false },
+    { value: 'events', label: 'Events', aiRecommended: false },
+    { value: 'print-media', label: 'Print Media', aiRecommended: false },
+    { value: 'influencer', label: 'Influencer Marketing', aiRecommended: false }
   ];
 
   kpiOptions = [
-    { value: 'reach', label: 'Alcance', aiRecommended: true },
+    { value: 'reach', label: 'Reach', aiRecommended: true },
     { value: 'engagement', label: 'Engagement', aiRecommended: true },
-    { value: 'conversions', label: 'Conversiones', aiRecommended: true },
+    { value: 'conversions', label: 'Conversions', aiRecommended: true },
     { value: 'brand-awareness', label: 'Brand Awareness', aiRecommended: false },
-    { value: 'website-traffic', label: 'Tráfico web', aiRecommended: false },
-    { value: 'lead-quality', label: 'Calidad de leads', aiRecommended: true }
+    { value: 'website-traffic', label: 'Website Traffic', aiRecommended: false },
+    { value: 'lead-quality', label: 'Lead Quality', aiRecommended: true }
   ];
-
-  
 
   generatedBrief = '';
   isPreviewMode = false;
@@ -519,13 +529,13 @@ export class AppComponent implements OnInit {
   // AI Recommendation Methods
   getAIRecommendation(field: string): string {
     const recommendations: {[key: string]: string} = {
-      'industry-tech': 'Basado en tendencias actuales, la industria tech muestra 67% más engagement con contenido visual',
-      'personality-friendly': 'Las marcas amigables generan 34% más confianza en audiencias B2B',
-      'objective-launch': 'Los lanzamientos de producto tienen mayor éxito con estrategias multi-canal',
-      'content-video': 'El contenido de video genera 3.2x más engagement que contenido estático',
-      'channel-social': 'Las redes sociales son ideales para alcance y engagement inicial'
+      'industry-tech': 'Based on current trends, the tech industry shows 67% higher engagement with visual content',
+      'personality-friendly': 'Friendly brands generate 34% more trust in B2B audiences',
+      'objective-launch': 'Product launches are more successful with multi-channel strategies',
+      'content-video': 'Video content generates 3.2x more engagement than static content',
+      'channel-social': 'Social media is ideal for initial reach and engagement'
     };
-    return recommendations[field] || 'Recomendación basada en análisis de datos y tendencias del mercado';
+    return recommendations[field] || 'Recommendation based on data analysis and market trends';
   }
 
   // Form Validation
@@ -962,19 +972,85 @@ export class AppComponent implements OnInit {
 
   getContextualQuestions(sectionTitle: string): string[] {
     const title = sectionTitle.toLowerCase();
-    if (title.includes('campaign objective')) {
+    
+    if (title.includes('business and brand information') || title.includes('business')) {
       return [
-        "How did you determine 50,000 downloads is realistic?",
-        "Why 8 weeks specifically?",
-        "What's the market size for this target?",
-        "How does this compare to competitor launches?"
+        "How will the uploaded documents influence AI recommendations?",
+        "What brand personality traits work best for our industry?",
+        "How do you validate brand guidelines alignment?",
+        "Can you analyze our competitive positioning?"
       ];
     }
+    
+    if (title.includes('target audience') || title.includes('audiencia')) {
+      return [
+        "How did you determine these demographic segments?",
+        "What's the confidence level for these audience insights?",
+        "How does our audience compare to competitors?",
+        "What behavioral patterns should influence messaging?"
+      ];
+    }
+    
+    if (title.includes('campaign objective') || title.includes('objetivo')) {
+      return [
+        "How did you determine 50,000 downloads is realistic?",
+        "Why 8 weeks specifically for this campaign?",
+        "What's the market size analysis behind this target?",
+        "How does this compare to competitor launch performance?"
+      ];
+    }
+    
+    if (title.includes('messages') || title.includes('messaging') || title.includes('call to action')) {
+      return [
+        "What psychological triggers are built into this messaging?",
+        "How was the call-to-action optimized for conversions?",
+        "What A/B test variations would you recommend?",
+        "How does this messaging differentiate from competitors?"
+      ];
+    }
+    
+    if (title.includes('channels') || title.includes('formats')) {
+      return [
+        "Why these specific channels for our audience?",
+        "What's the expected performance for each channel?",
+        "How was the budget allocation optimized?",
+        "What's the attribution model for multi-channel tracking?"
+      ];
+    }
+    
+    if (title.includes('timeline') || title.includes('dates')) {
+      return [
+        "How does this timeline align with industry cycles?",
+        "What are the critical path dependencies?",
+        "How much buffer time is built into the schedule?",
+        "What external factors influenced these dates?"
+      ];
+    }
+    
+    if (title.includes('measurement') || title.includes('kpis')) {
+      return [
+        "How were these KPI targets benchmarked?",
+        "What's the attribution model for measuring success?",
+        "How often should we review and optimize?",
+        "What leading indicators predict campaign success?"
+      ];
+    }
+    
+    if (title.includes('budget') || title.includes('considerations')) {
+      return [
+        "How was this budget allocation optimized?",
+        "What's the expected ROI timeline?",
+        "How does spend distribution compare to benchmarks?",
+        "What contingency plans exist for budget adjustments?"
+      ];
+    }
+    
+    // Preguntas por defecto
     return [
-      "Tell me more about this section",
-      "What data supports this recommendation?",
-      "How can we optimize this further?",
-      "What are the risks to consider?"
+      "What data supports these recommendations?",
+      "How can we optimize this section further?",
+      "What are the potential risks and mitigation strategies?",
+      "How does this align with industry best practices?"
     ];
   }
 
@@ -1043,15 +1119,210 @@ export class AppComponent implements OnInit {
   generateAIResponse(userInput: string): string {
     const input = userInput.toLowerCase();
     
+    // Detectar si se está analizando una sección específica
+    if (input.includes('analyze this section')) {
+      return this.generateSectionAnalysis(input);
+    }
+    
+    // Respuestas contextuales basadas en keywords
+    if (input.includes('campaign objective') || input.includes('objetivo')) {
+      return `Perfect! I can see you're interested in the "🎯 Campaign Objective" section. I have all the context about this part of the brief and can explain the reasoning, suggest improvements, or answer any specific questions you have about this section.
+
+🎯 **Campaign Objective Analysis:**
+
+This objective was crafted based on:
+• Market size analysis showing 2.3M healthcare practices in the US
+• Competitor benchmarks indicating 50K downloads is achievable for healthcare SaaS  
+• 8-week timeline aligns with healthcare decision cycles
+• Focus on 'small business owners' targets the underserved SMB market
+
+The objective balances ambition with realism. Would you like me to explain the market research behind these numbers?`;
+    }
+    
+    if (input.includes('target audience') || input.includes('audiencia')) {
+      return `Excellent! Let's dive into the "👥 Target Audience" section. This is one of the most critical components of your creative brief.
+
+👥 **Target Audience Deep Dive:**
+
+Primary audience profile was built from:
+• Demographics: Healthcare professionals aged 28-45
+• Psychographics: Efficiency-oriented, patient-focused
+• Behavioral patterns: 73% use mobile apps for practice management
+• Pain points: Average 2.5 hours daily on administrative tasks
+
+**Key Insights:**
+• 68% are willing to pay for time-saving solutions
+• Trust peer recommendations 4x more than advertising
+• Prefer trial periods over demos (67% vs 23%)
+
+This audience responds best to outcome-focused messaging. Should I elaborate on the persona development process?`;
+    }
+    
+    if (input.includes('channels') || input.includes('canales')) {
+      return `Great choice! The "📱 Channels and Formats" section is where strategy meets execution.
+
+📱 **Channel Strategy Analysis:**
+
+Recommended channel mix based on:
+• **LinkedIn (40% budget):** 89% of healthcare decision makers are active
+• **Medical publications (25%):** High trust factor in healthcare industry  
+• **Google Ads (20%):** 94% search before software purchases
+• **Email marketing (15%):** 6.2x ROI in B2B healthcare
+
+**Performance predictions:**
+• LinkedIn: 12% engagement rate (vs 2.3% industry avg)
+• Medical pubs: 34% click-through rate
+• Google Ads: $2.80 CPC with 15% conversion rate
+
+The multi-channel approach reduces risk while maximizing reach. Want to explore the attribution model?`;
+    }
+    
+    if (input.includes('budget') || input.includes('presupuesto')) {
+      return `Perfect! The "💰 Budget and Allocation" section is crucial for campaign success.
+
+💰 **Budget Strategy Breakdown:**
+
+Total budget allocation ($50,000):
+• **Paid media (40% - $20k):** Maximum reach during launch window
+• **Content production (30% - $15k):** High-quality assets for conversion
+• **Creative development (20% - $10k):** Professional design and copy
+• **Tools & analytics (10% - $5k):** Measurement and optimization
+
+**ROI Projections:**
+• Cost per acquisition: $85-120 (industry benchmark: $150)
+• Expected conversions: 350-400 downloads
+• Customer lifetime value: $2,400
+• Projected ROI: 285% over 6 months
+
+This allocation follows the 40-30-20-10 rule proven in healthcare software launches. Would you like to see the month-by-month spending plan?`;
+    }
+    
+    if (input.includes('timeline') || input.includes('tiempo')) {
+      return `Excellent focus on the "📅 Timeline and Milestones" section! Timing is everything in B2B healthcare.
+
+📅 **Strategic Timeline Analysis:**
+
+**8-week launch window chosen because:**
+• Healthcare purchase cycles average 6-8 weeks
+• Avoids summer vacation period (July-August)  
+• Aligns with Q3 budget allocation cycles
+• Allows for 2-week pre-launch buzz building
+
+**Critical milestones:**
+• Week 1-2: Creative production & audience setup
+• Week 3-4: Soft launch with limited audience
+• Week 5-6: Full campaign activation
+• Week 7-8: Optimization and scale-up
+
+**Key dates to avoid:**
+• Medical conferences (AMA Annual Meeting - June 10-14)
+• Holiday periods affecting decision makers
+• End-of-quarter busy periods
+
+The timeline incorporates 15% buffer time for unexpected delays. Should I break down the week-by-week action plan?`;
+    }
+    
+    if (input.includes('kpi') || input.includes('measurement') || input.includes('metrics')) {
+      return `Great question about the "📊 KPIs and Measurement" framework!
+
+📊 **Measurement Strategy Deep Dive:**
+
+**Primary KPIs (North Star Metrics):**
+• Download conversions: Target 50,000 (tracking: Google Analytics + UTM)
+• Cost per acquisition: $85-120 (tracking: Campaign manager + CRM)
+• Trial-to-paid conversion: 18% (tracking: Product analytics)
+
+**Secondary KPIs (Leading Indicators):**
+• Email signup rate: 12% (industry avg: 8%)
+• Content engagement: 8+ minutes avg. session time
+• LinkedIn engagement: 12% rate (vs 2.3% baseline)
+
+**Attribution Model:**
+• First-touch: 30% weight (awareness campaigns)
+• Multi-touch: 40% weight (nurture sequences)  
+• Last-touch: 30% weight (conversion campaigns)
+
+**Reporting cadence:** Weekly tactical, bi-weekly strategic, monthly executive summary.
+
+The measurement framework includes cohort analysis for long-term insights. Want to see the dashboard mockup?`;
+    }
+    
+    if (input.includes('files') || input.includes('context') || input.includes('documents')) {
+      return `Great question about the uploaded context documents! These files are crucial for AI-powered brief generation.
+
+📄 **Context Documents Analysis:**
+
+The uploaded files will enhance AI recommendations by:
+• **Brand guidelines:** Ensuring visual and tone consistency
+• **Previous campaigns:** Learning from past performance data
+• **Market research:** Incorporating industry-specific insights
+• **Competitor analysis:** Identifying differentiation opportunities
+
+**AI Processing Benefits:**
+• 73% more accurate audience targeting when brand docs included
+• 45% better message-market fit with previous campaign data
+• 62% improvement in channel selection with industry research
+
+The AI analyzes document content, extracts key insights, and applies them contextually throughout the brief generation process. This ensures your brief isn't generic but tailored to your specific brand and market position.
+
+Would you like me to explain how the AI processes each document type?`;
+    }
+    
+    // Respuestas generales
     if (input.includes('brief') || input.includes('wizard')) {
       return "¡Excelente! El wizard de Creative Brief te ayudará a generar un brief profesional paso a paso. ¿Te gustaría que te explique algún paso específico o tienes preguntas sobre las recomendaciones de IA?";
     }
     
-    if (input.includes('recomendación') || input.includes('ai')) {
+    if (input.includes('recomendación') || input.includes('ai') || input.includes('recommendation')) {
       return "Las recomendaciones de IA se basan en análisis de datos de más de 10,000 campañas exitosas. Cada sugerencia tiene un score de confianza y está optimizada para tu industria y objetivos específicos.";
     }
     
-    return 'Estoy aquí para ayudarte con el Creative Brief. ¿Tienes alguna pregunta específica sobre los pasos del wizard o las recomendaciones?';
+    return 'I\'m here to help you with your Creative Brief! I can provide detailed analysis of any section, explain AI recommendations, or answer specific questions about strategy, tactics, or implementation. What would you like to explore?';
+  }
+
+  generateSectionAnalysis(input: string): string {
+    // Extraer el título de la sección del input
+    const sectionMatch = input.match(/"([^"]+)"/);
+    const sectionTitle = sectionMatch ? sectionMatch[1] : '';
+    
+    if (sectionTitle.includes('Campaign Objective') || sectionTitle.includes('objetivo')) {
+      return `Perfect! I can see you're interested in the "${sectionTitle}" section. I have all the context about this part of the brief and can explain the reasoning, suggest improvements, or answer any specific questions you have about this section.
+
+🎯 **Campaign Objective Analysis:**
+
+This objective was crafted based on:
+• Market size analysis showing 2.3M healthcare practices in the US
+• Competitor benchmarks indicating 50K downloads is achievable for healthcare SaaS
+• 8-week timeline aligns with healthcare decision cycles  
+• Focus on 'small business owners' targets the underserved SMB market
+
+The objective balances ambition with realism. Would you like me to explain the market research behind these numbers?`;
+    }
+    
+    if (sectionTitle.includes('Target Audience') || sectionTitle.includes('audiencia')) {
+      return `Perfect! I can see you're interested in the "${sectionTitle}" section. This is the foundation of effective campaign strategy.
+
+👥 **Target Audience Analysis:**
+
+This audience definition was built using:
+• Healthcare industry data from 15+ sources
+• User research with 200+ healthcare professionals
+• Competitive analysis of successful healthcare SaaS
+• Behavioral analytics from similar product launches
+
+**Key insights that shaped this audience:**
+• 68% prefer efficiency over feature complexity
+• Trust peer recommendations 4x more than ads
+• 73% research solutions during non-patient hours
+• Average 2.5 hours daily on administrative tasks
+
+Would you like me to dive deeper into the persona development methodology?`;
+    }
+    
+    // Respuesta genérica para otras secciones
+    return `Perfect! I can see you're interested in the "${sectionTitle}" section. I have comprehensive context about this part of the brief and can provide detailed analysis, explain the strategic reasoning, or answer any specific questions you have.
+
+Let me know what aspect you'd like to explore further - the data behind the recommendations, optimization opportunities, or implementation details!`;
   }
 
   // Helper method to check current step (to work around Angular type checking)
@@ -1125,11 +1396,27 @@ openChat(title: string, content: string): void {
   this.chatModalActive = true;
   
   // Agregar mensaje del usuario automáticamente
-  this.addMessageToChat('user'  , `Analyze this section: "${title}"`);
+  this.addMessageToChat('user', `Analyze this section: "${title}"`);
   
-  // Simular respuesta de AI
+  // Simular respuesta de AI con información contextual mejorada
   setTimeout(() => {
-    this.addMessageToChat('ai' , `Ill analyze the "${title}" section for you. Based on the content, I can provide insights about...`);
+    let aiResponse = '';
+    
+    // Si hay archivos subidos, mencionar su valor para el contexto
+    if (this.uploadedFiles.length > 0 && title.includes('Business and Brand Information')) {
+      aiResponse = `Perfect! I can see you're interested in the "${title}" section and you've uploaded ${this.uploadedFiles.length} context document(s). This is excellent as these files will significantly enhance the AI's understanding of your brand.
+
+📄 **Uploaded Context Analysis:**
+${this.uploadedFiles.map(file => `• ${this.getFileIcon(file.type)} ${file.name} (${this.formatFileSize(file.size)})`).join('\n')}
+
+These documents will help me provide more accurate recommendations throughout the brief generation process. The AI will analyze these files to understand your brand guidelines, previous campaign performance, and industry-specific context.
+
+${this.generateSectionAnalysis(`"${title}"`)}`;
+    } else {
+      aiResponse = this.generateSectionAnalysis(`"${title}"`);
+    }
+    
+    this.addMessageToChat('ai', aiResponse);
     this.initSuggestedQuestions(title);
   }, 1000);
 }  // Additional utility methods
@@ -1145,6 +1432,98 @@ openChat(title: string, content: string): void {
     // Implementar lógica de edición
     console.log('Editing section:', section);
     alert(`Editando sección: ${section.title}\n\nEn una implementación real, esto abriría un modal de edición.`);
+  }
+
+  // File upload methods for LLM context enhancement
+  triggerFileUpload(): void {
+    const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.click();
+    }
+  }
+
+  onFileSelect(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files) {
+      this.processFiles(Array.from(input.files));
+    }
+  }
+
+  onDragOver(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  onDragLeave(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  onFileDrop(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    if (event.dataTransfer?.files) {
+      this.processFiles(Array.from(event.dataTransfer.files));
+    }
+  }
+
+  processFiles(files: File[]): void {
+    for (const file of files) {
+      if (this.validateFile(file)) {
+        // Check if file already exists
+        const existingFile = this.uploadedFiles.find(f => f.name === file.name && f.size === file.size);
+        if (!existingFile) {
+          this.uploadedFiles.push(file);
+        }
+      }
+    }
+  }
+
+  validateFile(file: File): boolean {
+    // Check file size
+    if (file.size > this.maxFileSize) {
+      alert(`File "${file.name}" is too large. Maximum size is 10MB.`);
+      return false;
+    }
+
+    // Check file type
+    if (!this.allowedFileTypes.includes(file.type)) {
+      alert(`File "${file.name}" is not a supported format. Please upload PDF, DOC, DOCX, TXT, PNG, or JPG files.`);
+      return false;
+    }
+
+    return true;
+  }
+
+  removeFile(index: number, event: Event): void {
+    event.stopPropagation();
+    this.uploadedFiles.splice(index, 1);
+  }
+
+  getFileIcon(fileType: string): string {
+    if (fileType.includes('pdf')) return '📄';
+    if (fileType.includes('word') || fileType.includes('document')) return '📝';
+    if (fileType.includes('text')) return '📋';
+    if (fileType.includes('image')) return '🖼️';
+    return '📁';
+  }
+
+  formatFileSize(bytes: number): string {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+  }
+
+  // Method to get file context for LLM processing (for future implementation)
+  getUploadedFilesContext(): string {
+    if (this.uploadedFiles.length === 0) return '';
+    
+    return `Context files uploaded: ${this.uploadedFiles.map(file => file.name).join(', ')}. ` +
+           `These documents should be considered when generating the creative brief to ensure ` +
+           `alignment with existing brand guidelines, previous campaign insights, and specific company context.`;
   }
 
   hasUpdatedSections(): boolean {
