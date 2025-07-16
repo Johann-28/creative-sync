@@ -622,15 +622,7 @@
                         <div>
                             <h1 class="brief-title">Creative Brief</h1>
                             <p style="color: #888;">TechFlow CRM Product Launch</p>
-                            <!-- Connection Status -->
-                            <div class="connection-status" *ngIf="briefSectionsError && briefSectionsError.includes('offline')">
-                                <span class="status-indicator offline">🔴</span>
-                                <span style="font-size: 0.8rem; color: #ffa726;">Modo Offline - Datos de ejemplo</span>
-                            </div>
-                            <div class="connection-status" *ngIf="!briefSectionsError && briefSections.length > 0">
-                                <span class="status-indicator online">🟢</span>
-                                <span style="font-size: 0.8rem; color: #66bb6a;">Conectado al backend</span>
-                            </div>
+                     
                         </div>
                         <div class="export-options">
                             <button class="btn-export" (click)="exportBrief('pdf')">📄 PDF</button>
@@ -640,37 +632,6 @@
                         </div>
                     </div>
 
-                    <!-- Brief Controls -->
-                    <div class="brief-controls">
-                        <div class="search-controls">
-                            <input type="text" 
-                                   class="search-input" 
-                                   placeholder="Buscar en secciones..."
-                                   #searchInput
-                                   (input)="searchSections(searchInput.value)">
-                            <button class="btn-refresh" (click)="refreshBriefSections()" title="Recargar">
-                                🔄
-                            </button>
-                        </div>
-                        
-                        <div class="filter-controls">
-                            <button class="filter-btn" (click)="loadBriefSections()" 
-                                    [class.active]="true">Todas</button>
-                            <button class="filter-btn" (click)="filterByPriority('high')">Alta Prioridad</button>
-                            <button class="filter-btn" (click)="filterByCategory('objectives')">Objetivos</button>
-                            <button class="filter-btn" (click)="filterByCategory('audience')">Audiencia</button>
-                            <button class="filter-btn" (click)="filterByCategory('insights')">AI Insights</button>
-                        </div>
-
-                        <div class="action-controls">
-                            <button class="btn-ai-insights" (click)="generateAIInsights()">
-                                🤖 Generar Insights
-                            </button>
-                            <button class="btn-ai-insights" (click)="generateNewBrief()" style="background: linear-gradient(135deg, #22c55e, #16a34a);">
-                                🚀 Generar Nuevo Brief
-                            </button>
-                        </div>
-                    </div>
 
                     <!-- Loading State -->
                     <div *ngIf="isLoadingBriefSections" class="loading-container">

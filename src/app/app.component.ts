@@ -571,7 +571,6 @@ export class AppComponent implements OnInit {
     this.isPreviewMode = true;
     this.generatedBrief = this.createBriefContent();
   }
-
   createBriefContent(): string {
     return `
       <div class="generated-brief">
@@ -579,58 +578,58 @@ export class AppComponent implements OnInit {
         <h2>${this.briefData.companyName}</h2>
         
         <section>
-          <h3>🏢 Información de la Empresa</h3>
-          <p><strong>Industria:</strong> ${this.briefData.industry}</p>
-          <p><strong>Personalidad de Marca:</strong> ${this.briefData.brandPersonality.join(', ')}</p>
-          <p><strong>Diferenciadores:</strong> ${this.briefData.keyDifferentiators}</p>
+          <h3>🏢 Company Information</h3>
+          <p><strong>Industry:</strong> ${this.briefData.industry}</p>
+          <p><strong>Brand Personality:</strong> ${this.briefData.brandPersonality.join(', ')}</p>
+          <p><strong>Key Differentiators:</strong> ${this.briefData.keyDifferentiators}</p>
         </section>
 
         <section>
-          <h3>👥 Audiencia Objetivo</h3>
-          <p><strong>Audiencia Primaria:</strong> ${this.briefData.primaryAudience}</p>
-          ${this.briefData.secondaryAudience ? `<p><strong>Audiencia Secundaria:</strong> ${this.briefData.secondaryAudience}</p>` : ''}
-          ${this.briefData.culturalConsiderations ? `<p><strong>Consideraciones Culturales:</strong> ${this.briefData.culturalConsiderations}</p>` : ''}
+          <h3>👥 Target Audience</h3>
+          <p><strong>Primary Audience:</strong> ${this.briefData.primaryAudience}</p>
+          ${this.briefData.secondaryAudience ? `<p><strong>Secondary Audience:</strong> ${this.briefData.secondaryAudience}</p>` : ''}
+          ${this.briefData.culturalConsiderations ? `<p><strong>Cultural Considerations:</strong> ${this.briefData.culturalConsiderations}</p>` : ''}
         </section>
 
         <section>
-          <h3>🎯 Objetivos de la Campaña</h3>
-          <p><strong>Objetivo Principal:</strong> ${this.briefData.campaignObjective}</p>
-          <p><strong>Objetivos SMART:</strong> ${this.briefData.smartGoals}</p>
-          <p><strong>Problema/Oportunidad:</strong> ${this.briefData.businessProblem}</p>
+          <h3>🎯 Campaign Objectives</h3>
+          <p><strong>Main Objective:</strong> ${this.briefData.campaignObjective}</p>
+          <p><strong>SMART Goals:</strong> ${this.briefData.smartGoals}</p>
+          <p><strong>Problem/Opportunity:</strong> ${this.briefData.businessProblem}</p>
         </section>
 
         <section>
-          <h3>💬 Mensajes y CTA</h3>
-          <p><strong>Mensaje Principal:</strong> ${this.briefData.primaryMessage}</p>
-          ${this.briefData.secondaryMessages ? `<p><strong>Mensajes Secundarios:</strong> ${this.briefData.secondaryMessages}</p>` : ''}
+          <h3>💬 Messages and CTA</h3>
+          <p><strong>Main Message:</strong> ${this.briefData.primaryMessage}</p>
+          ${this.briefData.secondaryMessages ? `<p><strong>Secondary Messages:</strong> ${this.briefData.secondaryMessages}</p>` : ''}
           <p><strong>Call to Action:</strong> ${this.briefData.callToAction}</p>
         </section>
 
         <section>
-          <h3>📱 Canales y Formatos</h3>
-          <p><strong>Tipos de Contenido:</strong> ${this.briefData.contentTypes.join(', ')}</p>
-          <p><strong>Canales:</strong> ${this.briefData.channels.join(', ')}</p>
-          <p><strong>Alcance Geográfico:</strong> ${this.briefData.geographicReach}</p>
+          <h3>📱 Channels and Formats</h3>
+          <p><strong>Content Types:</strong> ${this.briefData.contentTypes.join(', ')}</p>
+          <p><strong>Channels:</strong> ${this.briefData.channels.join(', ')}</p>
+          <p><strong>Geographic Reach:</strong> ${this.briefData.geographicReach}</p>
         </section>
 
         <section>
           <h3>📅 Timeline</h3>
-          <p><strong>Inicio:</strong> ${this.briefData.startDate}</p>
-          <p><strong>Fin:</strong> ${this.briefData.endDate}</p>
-          ${this.briefData.keyDates ? `<p><strong>Fechas Clave:</strong> ${this.briefData.keyDates}</p>` : ''}
+          <p><strong>Start Date:</strong> ${this.briefData.startDate}</p>
+          <p><strong>End Date:</strong> ${this.briefData.endDate}</p>
+          ${this.briefData.keyDates ? `<p><strong>Key Dates:</strong> ${this.briefData.keyDates}</p>` : ''}
         </section>
 
         <section>
-          <h3>📊 KPIs y Medición</h3>
-          <p><strong>Métricas de Éxito:</strong> ${this.briefData.successMetrics}</p>
+          <h3>📊 KPIs and Measurement</h3>
+          <p><strong>Success Metrics:</strong> ${this.briefData.successMetrics}</p>
           <p><strong>KPIs:</strong> ${this.briefData.kpis.join(', ')}</p>
-          ${this.briefData.estimatedROI ? `<p><strong>ROI Estimado:</strong> ${this.briefData.estimatedROI}</p>` : ''}
+          ${this.briefData.estimatedROI ? `<p><strong>Estimated ROI:</strong> ${this.briefData.estimatedROI}</p>` : ''}
         </section>
 
         <section>
-          <h3>💰 Presupuesto</h3>
-          <p><strong>Presupuesto Total:</strong> ${this.briefData.budget}</p>
-          ${this.briefData.budgetBreakdown ? `<p><strong>Desglose:</strong> ${this.briefData.budgetBreakdown}</p>` : ''}
+          <h3>💰 Budget</h3>
+          <p><strong>Total Budget:</strong> ${this.briefData.budget}</p>
+          ${this.briefData.budgetBreakdown ? `<p><strong>Breakdown:</strong> ${this.briefData.budgetBreakdown}</p>` : ''}
         </section>
       </div>
     `;
@@ -638,15 +637,15 @@ export class AppComponent implements OnInit {
 
   // Export Methods
   exportToPDF(): void {
-    alert('📄 Exportando a PDF...\n\nEn una implementación real, esto generaría un PDF profesional del Creative Brief.');
+    alert('📄 Exporting to PDF...\n\nIn a real implementation, this would generate a professional PDF of the Creative Brief.');
   }
 
   exportToPresentation(): void {
-    alert('📊 Exportando a Presentación...\n\nEn una implementación real, esto crearía una presentación ejecutiva.');
+    alert('📊 Exporting to Presentation...\n\nIn a real implementation, this would create an executive presentation.');
   }
 
   exportToText(): void {
-    alert('📋 Exportando a Texto...\n\nEn una implementación real, esto generaría un documento de texto estructurado.');
+    alert('📋 Exporting to Text...\n\nIn a real implementation, this would generate a structured text document.');
   }
 
   // Reset wizard
