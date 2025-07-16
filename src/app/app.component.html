@@ -204,6 +204,9 @@
                                 <div class="legend-dot external"></div>
                                 <span>External Data</span>
                             </div>
+                            <div class="legend-item" style="margin-right: 5rem;">
+                                
+                            </div>
                         </div>
                     </div>
 
@@ -271,6 +274,25 @@
                             <line class="connection-line" x1="35" y1="25" x2="65" y2="70" id="line-prd-sal"></line>
                             <line class="connection-line" x1="15" y1="45" x2="80" y2="20" id="line-trends-competitor"></line>
                             <line class="connection-line" x1="25" y1="80" x2="20" y2="75" id="line-benchmark-channel"></line>
+                            
+                            <!-- Question nodes to AI insights connections -->
+                            <!-- Company and brand info to tone of voice -->
+                            <line class="connection-line question-connection" x1="87" y1="27" x2="35" y2="35" id="line-brand-tone"></line>
+                            <line class="connection-line question-connection" x1="91" y1="21" x2="35" y2="35" id="line-personality-tone"></line>
+                            
+                            <!-- Audience questions to target audience AI node -->
+                            <line class="connection-line question-connection" x1="10" y1="55" x2="50" y2="50" id="line-primary-audience"></line>
+                            <line class="connection-line question-connection" x1="7" y1="58" x2="50" y2="50" id="line-secondary-audience"></line>
+                            <line class="connection-line question-connection" x1="13" y1="61" x2="50" y2="50" id="line-perception-audience"></line>
+                            
+                            <!-- Channel questions to channels AI node -->
+                            <line class="connection-line question-connection" x1="58" y1="82" x2="65" y2="65" id="line-distribution-channels"></line>
+                            <line class="connection-line question-connection" x1="55" y1="85" x2="65" y2="65" id="line-content-channels"></line>
+                            <line class="connection-line question-connection" x1="52" y1="88" x2="65" y2="65" id="line-performance-channels"></line>
+                            
+                            <!-- Message questions to tone of voice -->
+                            <line class="connection-line question-connection" x1="5" y1="25" x2="35" y2="35" id="line-message-tone"></line>
+                            <line class="connection-line question-connection" x1="8" y1="28" x2="35" y2="35" id="line-support-tone"></line>
                         </svg>
 
                         <!-- Central AI Insight Nodes -->
@@ -352,6 +374,239 @@
                             📡
                             <div class="node-label">Data</div>
                         </div>
+
+                        <!-- Design Team Question Nodes - Individual Questions from Brief Wizard -->
+                        <!-- Step 1: Business and Brand Information -->
+                        <div class="network-node question design" style="top: 15%; left: 85%;" 
+                             (mouseover)="onQuestionHover($event, 'Company Name', 'TechFlow Inc.')"
+                             (mouseleave)="clearHighlights()">
+                            🏢
+                            <div class="node-label">Company</div>
+                        </div>
+
+                        <div class="network-node question design" style="top: 18%; left: 88%;" 
+                             (mouseover)="onQuestionHover($event, 'Industry', 'Software as a Service (SaaS)')"
+                             (mouseleave)="clearHighlights()">
+                            🏭
+                            <div class="node-label">Industry</div>
+                        </div>
+
+                        <div class="network-node question design" style="top: 21%; left: 91%;" 
+                             (mouseover)="onQuestionHover($event, 'Brand Personality', 'Innovative and Friendly')"
+                             (mouseleave)="clearHighlights()">
+                            🎭
+                            <div class="node-label">Personality</div>
+                        </div>
+
+                        <div class="network-node question design" style="top: 24%; left: 94%;" 
+                             (mouseover)="onQuestionHover($event, 'Key Differentiators', 'AI-powered automation, user-friendly interface, 24/7 human support')"
+                             (mouseleave)="clearHighlights()">
+                            ⭐
+                            <div class="node-label">Differentiators</div>
+                        </div>
+
+                        <div class="network-node question design" style="top: 27%; left: 87%;" 
+                             (mouseover)="onQuestionHover($event, 'Brand Guidelines', 'Yes, we follow a modern, minimal design with a conversational tone of voice')"
+                             (mouseleave)="clearHighlights()">
+                            📖
+                            <div class="node-label">Guidelines</div>
+                        </div>
+
+                        <!-- Step 2: Target Audience -->
+                        <div class="network-node question design" style="top: 55%; left: 10%;" 
+                             (mouseover)="onQuestionHover($event, 'Primary Audience', 'Small and medium-sized business owners in healthcare, aged 30–50, seeking time-saving digital solutions')"
+                             (mouseleave)="clearHighlights()">
+                            👤
+                            <div class="node-label">Primary</div>
+                        </div>
+
+                        <div class="network-node question design" style="top: 58%; left: 7%;" 
+                             (mouseover)="onQuestionHover($event, 'Secondary Audience', 'Independent consultants and tech-savvy freelancers in the wellness sector')"
+                             (mouseleave)="clearHighlights()">
+                            👥
+                            <div class="node-label">Secondary</div>
+                        </div>
+
+                        <div class="network-node question design" style="top: 61%; left: 13%;" 
+                             (mouseover)="onQuestionHover($event, 'Brand Perception', 'Reliable, easy to use, and innovative, but not yet widely known')"
+                             (mouseleave)="clearHighlights()">
+                            🎯
+                            <div class="node-label">Perception</div>
+                        </div>
+
+                        <div class="network-node question design" style="top: 64%; left: 10%;" 
+                             (mouseover)="onQuestionHover($event, 'Cultural Considerations', 'Yes, the campaign will be bilingual (English and Spanish) and focused on Latin American countries')"
+                             (mouseleave)="clearHighlights()">
+                            🌍
+                            <div class="node-label">Culture</div>
+                        </div>
+
+                        <!-- Step 3: Campaign Objective -->
+                        <div class="network-node question design" style="top: 8%; left: 45%;" 
+                             (mouseover)="onQuestionHover($event, 'Main Objective', 'Generate leads and boost product adoption')"
+                             (mouseleave)="clearHighlights()">
+                            📈
+                            <div class="node-label">Objective</div>
+                        </div>
+
+                        <div class="network-node question design" style="top: 5%; left: 48%;" 
+                             (mouseover)="onQuestionHover($event, 'SMART Goals', 'Generate 1,000 qualified leads and increase website signups by 25% within 90 days')"
+                             (mouseleave)="clearHighlights()">
+                            🎯
+                            <div class="node-label">SMART Goals</div>
+                        </div>
+
+                        <div class="network-node question design" style="top: 11%; left: 52%;" 
+                             (mouseover)="onQuestionHover($event, 'Business Problem', 'Low awareness of our new product features among potential B2B customers')"
+                             (mouseleave)="clearHighlights()">
+                            ❗
+                            <div class="node-label">Problem</div>
+                        </div>
+
+                        <!-- Step 4: Messages and Call to Action -->
+                        <div class="network-node question design" style="top: 25%; left: 5%;" 
+                             (mouseover)="onQuestionHover($event, 'Main Message', 'Save hours every week by automating your business operations with TechFlow')"
+                             (mouseleave)="clearHighlights()">
+                            💬
+                            <div class="node-label">Message</div>
+                        </div>
+
+                        <div class="network-node question design" style="top: 28%; left: 8%;" 
+                             (mouseover)="onQuestionHover($event, 'Secondary Messages', 'Seamless integration, real-time analytics, and dedicated support included')"
+                             (mouseleave)="clearHighlights()">
+                            📝
+                            <div class="node-label">Support Msg</div>
+                        </div>
+
+                        <div class="network-node question design" style="top: 31%; left: 2%;" 
+                             (mouseover)="onQuestionHover($event, 'Call to Action', 'Start your free 30-day trial')"
+                             (mouseleave)="clearHighlights()">
+                            📞
+                            <div class="node-label">CTA</div>
+                        </div>
+
+                        <div class="network-node question design" style="top: 34%; left: 6%;" 
+                             (mouseover)="onQuestionHover($event, 'Strategy Alignment', 'It supports our goal to expand our user base in new verticals and establish brand trust')"
+                             (mouseleave)="clearHighlights()">
+                            🎪
+                            <div class="node-label">Strategy</div>
+                        </div>
+
+                        <!-- Step 5: Channels and Formats -->
+                        <div class="network-node question design" style="top: 85%; left: 55%;" 
+                             (mouseover)="onQuestionHover($event, 'Content Types', 'Social media posts, video explainers, email sequences, and a landing page')"
+                             (mouseleave)="clearHighlights()">
+                            📄
+                            <div class="node-label">Content</div>
+                        </div>
+
+                        <div class="network-node question design" style="top: 82%; left: 58%;" 
+                             (mouseover)="onQuestionHover($event, 'Distribution Channels', 'LinkedIn, YouTube, Email marketing, and Google Display Network')"
+                             (mouseleave)="clearHighlights()">
+                            📢
+                            <div class="node-label">Distribution</div>
+                        </div>
+
+                        <div class="network-node question design" style="top: 88%; left: 52%;" 
+                             (mouseover)="onQuestionHover($event, 'Channel Performance', 'LinkedIn and email had high conversion rates; Google Ads had good reach but lower ROI')"
+                             (mouseleave)="clearHighlights()">
+                            📊
+                            <div class="node-label">Performance</div>
+                        </div>
+
+                        <div class="network-node question design" style="top: 85%; left: 49%;" 
+                             (mouseover)="onQuestionHover($event, 'Geographic Reach', 'Mexico, Colombia, and Spain')"
+                             (mouseleave)="clearHighlights()">
+                            🗺️
+                            <div class="node-label">Geography</div>
+                        </div>
+
+                        <!-- Step 6: Timeline -->
+                        <div class="network-node question design" style="top: 85%; left: 35%;" 
+                             (mouseover)="onQuestionHover($event, 'Start Date', '2025-08-01')"
+                             (mouseleave)="clearHighlights()">
+                            📅
+                            <div class="node-label">Start</div>
+                        </div>
+
+                        <div class="network-node question design" style="top: 88%; left: 38%;" 
+                             (mouseover)="onQuestionHover($event, 'End Date', '2025-10-31')"
+                             (mouseleave)="clearHighlights()">
+                            🏁
+                            <div class="node-label">End</div>
+                        </div>
+
+                        <div class="network-node question design" style="top: 82%; left: 32%;" 
+                             (mouseover)="onQuestionHover($event, 'Key Dates', 'Product launch on August 15 and participation in HealthTech Expo on September 10')"
+                             (mouseleave)="clearHighlights()">
+                            🗓️
+                            <div class="node-label">Events</div>
+                        </div>
+
+                        <div class="network-node question design" style="top: 91%; left: 35%;" 
+                             (mouseover)="onQuestionHover($event, 'Internal Deadlines', 'Creative assets by July 25, approvals by July 30, media buy by August 1')"
+                             (mouseleave)="clearHighlights()">
+                            ⏰
+                            <div class="node-label">Deadlines</div>
+                        </div>
+
+                        <!-- Step 7: Measurement and KPIs -->
+                        <div class="network-node question design" style="top: 15%; left: 15%;" 
+                             (mouseover)="onQuestionHover($event, 'Success Measurement', 'By tracking lead generation, website conversion, and engagement rates')"
+                             (mouseleave)="clearHighlights()">
+                            📏
+                            <div class="node-label">Measurement</div>
+                        </div>
+
+                        <div class="network-node question design" style="top: 12%; left: 18%;" 
+                             (mouseover)="onQuestionHover($event, 'Key KPIs', 'Number of qualified leads, signup conversion rate, email open rate, video watch time')"
+                             (mouseleave)="clearHighlights()">
+                            📊
+                            <div class="node-label">KPIs</div>
+                        </div>
+
+                        <div class="network-node question design" style="top: 18%; left: 12%;" 
+                             (mouseover)="onQuestionHover($event, 'Reporting Requirements', 'Weekly dashboards for internal team and bi-weekly reports for executives')"
+                             (mouseleave)="clearHighlights()">
+                            📋
+                            <div class="node-label">Reporting</div>
+                        </div>
+
+                        <div class="network-node question design" style="top: 9%; left: 21%;" 
+                             (mouseover)="onQuestionHover($event, 'Estimated ROI', 'Estimated ROI of 350% over 6 months')"
+                             (mouseleave)="clearHighlights()">
+                            💰
+                            <div class="node-label">ROI</div>
+                        </div>
+
+                        <!-- Step 8: Budget and Final Considerations -->
+                        <div class="network-node question design" style="top: 55%; left: 90%;" 
+                             (mouseover)="onQuestionHover($event, 'Total Budget', '50000 USD')"
+                             (mouseleave)="clearHighlights()">
+                            💵
+                            <div class="node-label">Budget</div>
+                        </div>
+
+                        <div class="network-node question design" style="top: 58%; left: 93%;" 
+                             (mouseover)="onQuestionHover($event, 'Budget Breakdown', '$20k paid media, $15k content production, $10k creatives, $5k tools')"
+                             (mouseleave)="clearHighlights()">
+                            📈
+                            <div class="node-label">Breakdown</div>
+                        </div>
+
+                        <div class="network-node question design" style="top: 52%; left: 87%;" 
+                             (mouseover)="onQuestionHover($event, 'Legal Requirements', 'Yes, we must include data protection disclaimers and get approval from the legal team')"
+                             (mouseleave)="clearHighlights()">
+                            ⚖️
+                            <div class="node-label">Legal</div>
+                        </div>
+
+                        <div class="network-node question design" style="top: 61%; left: 90%;" 
+                             (mouseover)="onQuestionHover($event, 'Additional Notes', 'Please emphasize the eco-friendly and inclusive aspects of the brand')"
+                             (mouseleave)="clearHighlights()">
+                            📌
+                            <div class="node-label">Notes</div>
+                        </div>
                     </div>
                 </div>
                 
@@ -362,45 +617,157 @@
 
             <!-- Screen 4: Final Creative Brief -->
             <div class="screen" id="screen-4">
-                <div class="brief-container">
+                <div class="brief-container" [class.selection-mode]="selectionMode">
                     <div class="brief-header">
                         <div>
                             <h1 class="brief-title">Creative Brief</h1>
                             <p style="color: #888;">TechFlow CRM Product Launch</p>
+                            <!-- Connection Status -->
+                            <div class="connection-status" *ngIf="briefSectionsError && briefSectionsError.includes('offline')">
+                                <span class="status-indicator offline">🔴</span>
+                                <span style="font-size: 0.8rem; color: #ffa726;">Modo Offline - Datos de ejemplo</span>
+                            </div>
+                            <div class="connection-status" *ngIf="!briefSectionsError && briefSections.length > 0">
+                                <span class="status-indicator online">🟢</span>
+                                <span style="font-size: 0.8rem; color: #66bb6a;">Conectado al backend</span>
+                            </div>
                         </div>
                         <div class="export-options">
-                            <a href="#" class="btn-export">📄 PDF</a>
-                            <a href="#" class="btn-export">📊 Slides</a>
-                            <a href="#" class="btn-export">📋 JSON</a>
+                            <button class="btn-export" (click)="exportBrief('pdf')">📄 PDF</button>
+                            <button class="btn-export" (click)="exportBrief('json')">📊 JSON</button>
+                            <button class="btn-export" (click)="exportBrief('docx')">� DOCX</button>
+                            <button class="btn-export" (click)="syncWithStakeholders()">🔄 Sync</button>
                         </div>
                     </div>
 
-                    
-<div *ngFor="let section of briefSections; " 
-             class="brief-section" 
-             [class.section-selectable]="selectionMode"
-             [class.section-selected]="selectedSectionIndex === section.id"
-             (click)="selectionMode ? handleSectionClick($event, section.title, getBriefSectionContent(section.id), section.id) : null">
-            
-            <h3>{{ section.icon }} {{ section.title }}</h3>
-            
-            <!-- Text Content -->
-            <div *ngIf="section.type === 'text'" class="brief-content" [innerHTML]="section.content"></div>
-            
-            <!-- Insights Grid -->
-            <div *ngIf="section.type === 'insights'" class="insights-grid">
-                <div *ngFor="let insight of section.insights;" class="insight-card">
-                    <div class="insight-title">{{ insight.title }}</div>
-                    <div>{{ insight.content }}</div>
-                </div>
-            </div>
-            
-            <!-- Metrics Content -->
-            <div *ngIf="section.type === 'metrics'" class="brief-content" [innerHTML]="section.content"></div>
-        </div>
+                    <!-- Brief Controls -->
+                    <div class="brief-controls">
+                        <div class="search-controls">
+                            <input type="text" 
+                                   class="search-input" 
+                                   placeholder="Buscar en secciones..."
+                                   #searchInput
+                                   (input)="searchSections(searchInput.value)">
+                            <button class="btn-refresh" (click)="refreshBriefSections()" title="Recargar">
+                                🔄
+                            </button>
+                        </div>
+                        
+                        <div class="filter-controls">
+                            <button class="filter-btn" (click)="loadBriefSections()" 
+                                    [class.active]="true">Todas</button>
+                            <button class="filter-btn" (click)="filterByPriority('high')">Alta Prioridad</button>
+                            <button class="filter-btn" (click)="filterByCategory('objectives')">Objetivos</button>
+                            <button class="filter-btn" (click)="filterByCategory('audience')">Audiencia</button>
+                            <button class="filter-btn" (click)="filterByCategory('insights')">AI Insights</button>
+                        </div>
 
-                    <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1);">
-                        <p style="color: #888; font-size: 0.9rem;">
+                        <div class="action-controls">
+                            <button class="btn-ai-insights" (click)="generateAIInsights()">
+                                🤖 Generar Insights
+                            </button>
+                            <button class="btn-ai-insights" (click)="generateNewBrief()" style="background: linear-gradient(135deg, #22c55e, #16a34a);">
+                                🚀 Generar Nuevo Brief
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Loading State -->
+                    <div *ngIf="isLoadingBriefSections" class="loading-container">
+                        <div class="loading-spinner"></div>
+                        <p>Cargando secciones del brief...</p>
+                    </div>
+
+                    <!-- Error State -->
+                    <div *ngIf="briefSectionsError" class="error-container">
+                        <div class="error-icon">⚠️</div>
+                        <h3>Error al cargar el brief</h3>
+                        <p>{{ briefSectionsError }}</p>
+                        <button class="btn-retry" (click)="refreshBriefSections()">
+                            � Reintentar
+                        </button>
+                    </div>
+
+                    <!-- Brief Sections -->
+                    <div *ngIf="!isLoadingBriefSections && !briefSectionsError" class="brief-sections">
+                        <!-- Empty State -->
+                        <div *ngIf="briefSections.length === 0" class="empty-state">
+                            <div class="empty-icon">📋</div>
+                            <h3>No hay secciones disponibles</h3>
+                            <p>No se encontraron secciones del brief con los filtros actuales.</p>
+                            <button class="btn-reset-filters" (click)="loadBriefSections()">
+                                Ver todas las secciones
+                            </button>
+                        </div>
+
+                        <!-- Section Cards -->
+                        <div *ngFor="let section of briefSections; trackBy: trackBriefSection" 
+                             class="brief-section" 
+                             [class.section-selectable]="selectionMode"
+                             [class.section-selected]="selectedSectionIndex === section.id"
+                             [class.high-priority]="section.priority === 'high'"
+                             [class.medium-priority]="section.priority === 'medium'"
+                             [class.low-priority]="section.priority === 'low'"
+                             (click)="selectionMode ? handleSectionClick($event, section.title, getBriefSectionContent(section.id), section.id) : null">
+                            
+                            <div class="section-header">
+                                <h3>{{ section.icon }} {{ section.title }}</h3>
+                                <div class="section-meta">
+                                    <span class="section-category" *ngIf="section.category">{{ section.category }}</span>
+                                    <span class="section-priority" [class]="'priority-' + section.priority" *ngIf="section.priority">
+                                        {{ section.priority }}
+                                    </span>
+                                    <span class="section-updated" *ngIf="section.updatedAt">
+                                        {{ section.updatedAt | date:'short' }}
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <!-- Text Content -->
+                            <div *ngIf="section.type === 'text'" class="brief-content" [innerHTML]="section.content"></div>
+                            
+                            <!-- Insights Grid -->
+                            <div *ngIf="section.type === 'insights'" class="insights-grid">
+                                <div *ngFor="let insight of section.insights; trackBy: trackInsightCard" class="insight-card">
+                                    <div class="insight-header">
+                                        <div class="insight-title">{{ insight.title }}</div>
+                                        <div class="insight-meta" *ngIf="insight.confidence || insight.source">
+                                            <span class="insight-confidence" *ngIf="insight.confidence">
+                                                {{ (insight.confidence * 100) | number:'1.0-0' }}%
+                                            </span>
+                                            <span class="insight-source" *ngIf="insight.source">
+                                                {{ insight.source }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="insight-content">{{ insight.content }}</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Metrics Content -->
+                            <div *ngIf="section.type === 'metrics'" class="brief-content" [innerHTML]="section.content"></div>
+
+                            <!-- Section Actions -->
+                            <div class="section-actions" *ngIf="!selectionMode">
+                                <button class="action-btn edit-btn" (click)="editSection(section)" title="Editar">
+                                    ✏️
+                                </button>
+                                <button class="action-btn delete-btn" (click)="deleteSection(section.id)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="brief-footer" *ngIf="!isLoadingBriefSections && briefSections.length > 0">
+                        <div class="brief-stats">
+                            <span>{{ briefSections.length }} secciones</span>
+                            <span *ngIf="hasUpdatedSections()">
+                                Última actualización: {{ getLatestUpdate() | date:'medium' }}
+                            </span>
+                        </div>
+                        <p style="color: #888; font-size: 0.9rem; text-align: center; margin-top: 1rem;">
                             Generated by CreativeSync AI • All stakeholders completed • Ready for execution
                         </p>
                     </div>

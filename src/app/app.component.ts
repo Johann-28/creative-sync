@@ -1,20 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
-interface BriefSection {
-  id: number;
-  icon: string;
-  title: string;
-  content: string;
-  type: 'text' | 'insights' | 'metrics';
-  insights?: InsightCard[];
-}
-
-interface InsightCard {
-  title: string;
-  content: string;
-}
+import { BriefService, BriefSection, InsightCard } from './services/brief.service';
 
 @Component({
   selector: 'app-root',
@@ -26,102 +13,12 @@ interface InsightCard {
 export class AppComponent implements OnInit {
   title = 'creative-sync';
 
-  
-// Sections
-briefSections: BriefSection[] = [
-{
-    id: 0,
-    icon: '🎯',
-    title: 'Campaign Objective',
-    content: 'Launch TechFlow CRM to small business owners in healthcare, driving 50,000 app downloads within 8 weeks while establishing the brand as the go-to solution for healthcare practice automation.',
-    type: 'text'
-},
-{
-    id: 1,
-    icon: '👥',
-    title: 'Target Audience',
-    content: `<strong>Primary:</strong> Healthcare practice owners and managers (ages 28-42)<br>
-            <strong>Characteristics:</strong> Tech-savvy but time-constrained, focused on efficiency and patient care quality<br>
-            <strong>Pain Points:</strong> Manual scheduling, patient data management, billing inefficiencies<br>
-            <strong>Motivation:</strong> Streamline operations to focus more on patient care`,
-    type: 'text'
-},
-{
-    id: 2,
-    icon: '💬',
-    title: 'Key Message',
-    content: '"TechFlow CRM gives healthcare professionals 5 hours back each week through intelligent automation, so you can focus on what matters most—your patients."',
-    type: 'text'
-},
-{
-    id: 3,
-    icon: '🎨',
-    title: 'Tone and Brand Personality',
-    content: `<strong>Primary Tone:</strong> Professional yet approachable, empowering<br>
-            <strong>Voice Characteristics:</strong> Confident, supportive, solution-focused<br>
-            <strong>Visual Style:</strong> Clean, minimalist design with healthcare-appropriate color palette (trustworthy blues, calming greens)`,
-    type: 'text'
-},
-{
-    id: 4,
-    icon: '📱',
-    title: 'Suggested Channels/Media',
-    content: `<strong>Primary Channels:</strong> LinkedIn sponsored content, Healthcare industry publications<br>
-            <strong>Secondary:</strong> Email sequences, Webinar series, Demo videos<br>
-            <strong>Content Formats:</strong> Video testimonials, Interactive demos, Case studies, Infographics`,
-    type: 'text'
-},
-{
-    id: 5,
-    icon: '🧠',
-    title: 'Key AI-Generated Insights',
-    content: 'AI-powered insights based on market analysis and industry trends',
-    type: 'insights',
-    insights: [
-    {
-        title: 'Optimal Timing',
-        content: 'Launch campaign on Tuesday-Thursday, 9-11 AM when healthcare professionals check professional content'
-    },
-    {
-        title: 'Content Performance',
-        content: 'Video testimonials from actual healthcare workers generate 3.2x more engagement than generic demos'
-    },
-    {
-        title: 'Competitive Advantage',
-        content: 'Emphasize HIPAA compliance and healthcare-specific features—67% of competitors don\'t highlight this'
-    },
-    {
-        title: 'Budget Allocation',
-        content: 'Recommended: 40% LinkedIn ads, 30% content creation, 20% email marketing, 10% retargeting'
-    }
-    ]
-},
-{
-    id: 6,
-    icon: '📊',
-    title: 'Success Metrics',
-    content: `<strong>Primary KPIs:</strong><br>
-            • 50,000 app downloads within 8 weeks<br>
-            • 15% trial-to-paid conversion rate<br>
-            • Cost per acquisition under $25<br><br>
-            <strong>Secondary KPIs:</strong><br>
-            • 25% increase in brand awareness in healthcare sector<br>
-            • 500+ webinar registrations<br>
-            • 3.5+ average content engagement rate`,
-    type: 'text'
-},
-{
-    id: 7,
-    icon: '🤝',
-    title: 'Stakeholder Contributions',
-    content: `<strong>Marketing Team:</strong> Campaign objectives, target metrics, channel strategy<br>
-            <strong>Product Team:</strong> Key features, technical differentiators, user benefits<br>
-            <strong>Design Team:</strong> Visual direction, brand consistency, content formats<br>
-            <strong>Sales Team:</strong> Customer pain points, objection handling, pricing strategy`,
-    type: 'text'
-}
-];
-  
+  // Loading states
+  isLoadingBriefSections = true;
+  briefSectionsError: string | null = null;
+
+  // Brief sections - now loaded from service
+  briefSections: BriefSection[] = [];
 
   // ...existing properties...
   currentZoom = 1;
@@ -258,7 +155,12 @@ briefSections: BriefSection[] = [
   generatedBrief = '';
   isPreviewMode = false;
 
+  constructor(private briefService: BriefService) {}
+
   ngOnInit(): void {
+    // Load brief sections from service
+    this.loadBriefSections();
+
     // Initialize Angular state
     this.currentScreen = 1;
     this.activeTab = 0;
@@ -771,7 +673,221 @@ briefSections: BriefSection[] = [
     this.resetWizard();
   }
 
-  // Missing methods for existing functionality
+  // Service-related methods
+  loadBriefSections(): void {
+    this.isLoadingBriefSections = true;
+    this.briefSectionsError = null;
+
+    this.briefService.getBriefSections().subscribe({
+      next: (sections) => {
+        this.briefSections = sections;
+        this.isLoadingBriefSections = false;
+        console.log('Brief sections loaded from backend:', sections.length);
+      },
+      error: (error) => {
+        console.error('Error loading from backend:', error);
+        
+        // Intentar cargar datos mock como fallback
+        this.loadMockDataFallback();
+      }
+    });
+  }
+
+  // Método de fallback para cargar datos mock
+  private loadMockDataFallback(): void {
+    console.log('Usando datos mock como fallback...');
+    
+    this.briefService.getBriefSectionsMock().subscribe({
+      next: (sections) => {
+        this.briefSections = sections;
+        this.isLoadingBriefSections = false;
+        this.briefSectionsError = 'Conectado en modo offline. Usando datos de ejemplo.';
+        console.log('Mock brief sections loaded:', sections.length);
+      },
+      error: (mockError) => {
+        this.briefSectionsError = 'Error al cargar datos. Verifique la conexión al backend.';
+        this.isLoadingBriefSections = false;
+        this.briefSections = [];
+        console.error('Error loading mock data:', mockError);
+      }
+    });
+  }
+
+  // Generar nuevo brief con parámetros
+  generateNewBrief(params?: any): void {
+    this.isLoadingBriefSections = true;
+    this.briefSectionsError = null;
+
+    this.briefService.generateBrief(params).subscribe({
+      next: (sections) => {
+        this.briefSections = sections;
+        this.isLoadingBriefSections = false;
+        console.log('New brief generated:', sections.length);
+      },
+      error: (error) => {
+        console.error('Error generating brief:', error);
+        this.loadMockDataFallback();
+      }
+    });
+  }
+
+  // Recargar secciones
+  refreshBriefSections(): void {
+    this.loadBriefSections();
+  }
+
+  // Buscar secciones
+  searchSections(query: string): void {
+    if (!query.trim()) {
+      this.loadBriefSections();
+      return;
+    }
+
+    this.isLoadingBriefSections = true;
+    this.briefService.searchBriefSections(query).subscribe({
+      next: (sections) => {
+        this.briefSections = sections;
+        this.isLoadingBriefSections = false;
+      },
+      error: (error) => {
+        console.error('Error searching sections:', error);
+        this.isLoadingBriefSections = false;
+      }
+    });
+  }
+
+  // Filtrar por categoría
+  filterByCategory(category: string): void {
+    this.isLoadingBriefSections = true;
+    this.briefService.getBriefSectionsByCategory(category).subscribe({
+      next: (sections) => {
+        this.briefSections = sections;
+        this.isLoadingBriefSections = false;
+      },
+      error: (error) => {
+        console.error('Error filtering by category:', error);
+        this.isLoadingBriefSections = false;
+      }
+    });
+  }
+
+  // Filtrar por prioridad
+  filterByPriority(priority: 'high' | 'medium' | 'low'): void {
+    this.isLoadingBriefSections = true;
+    this.briefService.getBriefSectionsByPriority(priority).subscribe({
+      next: (sections) => {
+        this.briefSections = sections;
+        this.isLoadingBriefSections = false;
+      },
+      error: (error) => {
+        console.error('Error filtering by priority:', error);
+        this.isLoadingBriefSections = false;
+      }
+    });
+  }
+
+  // Agregar nueva sección
+  addNewSection(sectionData: Omit<BriefSection, 'id' | 'createdAt' | 'updatedAt'>): void {
+    this.briefService.createBriefSection(sectionData).subscribe({
+      next: (newSection) => {
+        this.briefSections.push(newSection);
+        console.log('New section added:', newSection);
+      },
+      error: (error) => {
+        console.error('Error adding section:', error);
+      }
+    });
+  }
+
+  // Actualizar sección existente
+  updateSection(sectionId: number, updates: Partial<BriefSection>): void {
+    this.briefService.updateBriefSection(sectionId, updates).subscribe({
+      next: (updatedSection) => {
+        if (updatedSection) {
+          const index = this.briefSections.findIndex(s => s.id === sectionId);
+          if (index !== -1) {
+            this.briefSections[index] = updatedSection;
+          }
+          console.log('Section updated:', updatedSection);
+        }
+      },
+      error: (error) => {
+        console.error('Error updating section:', error);
+      }
+    });
+  }
+
+  // Eliminar sección
+  deleteSection(sectionId: number): void {
+    if (confirm('¿Estás seguro de que quieres eliminar esta sección?')) {
+      this.briefService.deleteBriefSection(sectionId).subscribe({
+        next: (success) => {
+          if (success) {
+            this.briefSections = this.briefSections.filter(s => s.id !== sectionId);
+            console.log('Section deleted:', sectionId);
+          }
+        },
+        error: (error) => {
+          console.error('Error deleting section:', error);
+        }
+      });
+    }
+  }
+
+  // Generar insights con IA
+  generateAIInsights(): void {
+    this.briefService.generateAIInsights(this.briefData).subscribe({
+      next: (insights) => {
+        // Crear una nueva sección con los insights generados
+        const aiSection: Omit<BriefSection, 'id' | 'createdAt' | 'updatedAt'> = {
+          icon: '🤖',
+          title: 'AI Generated Insights',
+          content: 'Insights generados automáticamente basados en los datos del brief',
+          type: 'insights',
+          category: 'ai-insights',
+          priority: 'high',
+          insights: insights
+        };
+
+        this.addNewSection(aiSection);
+      },
+      error: (error) => {
+        console.error('Error generating AI insights:', error);
+      }
+    });
+  }
+
+  // Exportar brief
+  exportBrief(format: 'pdf' | 'json' | 'docx'): void {
+    this.briefService.exportBrief(format).subscribe({
+      next: (exportData) => {
+        // Simular descarga del archivo
+        console.log('Export ready:', exportData);
+        alert(`Brief exportado como ${format.toUpperCase()}. En una implementación real, se descargaría: ${exportData.filename}`);
+      },
+      error: (error) => {
+        console.error('Error exporting brief:', error);
+        alert('Error al exportar el brief');
+      }
+    });
+  }
+
+  // Sincronizar con stakeholders
+  syncWithStakeholders(): void {
+    this.briefService.syncWithStakeholders().subscribe({
+      next: (syncResult) => {
+        console.log('Sync completed:', syncResult);
+        alert(`Sincronización completada. Última sincronización: ${syncResult.lastSync.toLocaleString()}`);
+      },
+      error: (error) => {
+        console.error('Error syncing:', error);
+        alert('Error al sincronizar con stakeholders');
+      }
+    });
+  }
+
+  // ...existing methods...
+
   initSuggestedQuestions(contextTitle: string | null = null): void {
     if (contextTitle) {
       this.suggestedQuestions = this.getContextualQuestions(contextTitle);
@@ -831,6 +947,18 @@ briefSections: BriefSection[] = [
 
   onChannelPerformanceHover(event: MouseEvent): void {
     this.showTooltip(event, 'Channel Performance', 'Channel analytics data');
+  }
+
+  // Network interaction methods
+  onQuestionHover(event: MouseEvent, questionTitle: string, answer: string): void {
+    const tooltipContent = `
+      <div class="question-tooltip">
+        <h4>${questionTitle}</h4>
+        <p><strong>Respuesta:</strong> ${answer}</p>
+        <span class="source-badge">🎨 Design Team Input</span>
+      </div>
+    `;
+    this.showTooltip(event, questionTitle, tooltipContent);
   }
 
   getContextualQuestions(sectionTitle: string): string[] {
@@ -1005,8 +1133,32 @@ openChat(title: string, content: string): void {
     this.addMessageToChat('ai' , `Ill analyze the "${title}" section for you. Based on the content, I can provide insights about...`);
     this.initSuggestedQuestions(title);
   }, 1000);
-}
+}  // Additional utility methods
+  trackBriefSection(index: number, section: BriefSection): number {
+    return section.id;
+  }
 
-// ...existing code...
+  trackInsightCard(index: number, insight: InsightCard): string {
+    return insight.title;
+  }
 
+  editSection(section: BriefSection): void {
+    // Implementar lógica de edición
+    console.log('Editing section:', section);
+    alert(`Editando sección: ${section.title}\n\nEn una implementación real, esto abriría un modal de edición.`);
+  }
+
+  hasUpdatedSections(): boolean {
+    return this.briefSections.some(section => section.updatedAt);
+  }
+
+  getLatestUpdate(): Date | null {
+    const updatedSections = this.briefSections.filter(section => section.updatedAt);
+    if (updatedSections.length === 0) return null;
+    
+    return updatedSections.reduce((latest, section) => {
+      if (!latest || !section.updatedAt) return section.updatedAt || null;
+      return section.updatedAt > latest ? section.updatedAt : latest;
+    }, null as Date | null);
+  }
 }
